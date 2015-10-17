@@ -1,0 +1,24 @@
+[StatusIcon]
+stepsize=2
+lmb_slider=true
+mmb_mute=false
+use_horizontal_slider=false
+show_sound_level=true
+onclick=xterm -e 'alsamixer'
+theme=tango
+
+[Hotkeys]
+up_enabled=false
+down_enabled=false
+mute_enabled=false
+up=XF86AudioRaiseVolume
+down=XF86AudioLowerVolume
+mute=XF86AudioMute
+
+[Alsa]
+
+#for home
+card=hw:1
+
+#for office
+#card=default

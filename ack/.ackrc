@@ -1,0 +1,7 @@
+--ignore-directory=is:tmp
+--ignore-file=ext:log
+--ignore-file=ext:svg
+--ignore-file=ext:png
+--ignore-file=ext:jpg
+--ignore-file=ext:jpeg
+
