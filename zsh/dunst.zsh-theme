@@ -123,6 +123,10 @@ prompt_dir() {
   prompt_segment default default '%~'
 }
 
+prompt_rvm() {
+  prompt_segment default red "`rvm-prompt i v g`"
+}
+
 # Virtualenv: current working virtualenv
 prompt_virtualenv() {
   local virtualenv_path="$VIRTUAL_ENV"
@@ -151,9 +155,11 @@ build_prompt() {
   prompt_status
   prompt_virtualenv
   prompt_dir
+  prompt_rvm
   prompt_git
   prompt_hg
   prompt_end
 }
 
-PROMPT='%{%f%b%k%}$(build_prompt) '
+PROMPT='╭─%{%f%b%k%}$(build_prompt)
+╰─%B$%b '
