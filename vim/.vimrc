@@ -29,6 +29,7 @@ Plugin 'scrooloose/syntastic'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'unblevable/quick-scope'
 Plugin 'elixir-lang/vim-elixir'
+Plugin 'mustache/vim-mustache-handlebars'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -41,7 +42,7 @@ else
   au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 endif
 
-let g:ruby_doc_command='open'
+"let g:ruby_doc_command='open'
 let g:qs_highlight_on_keys = ['f', 'F']
 
 " EASY TAGS OPTIONS {{{
@@ -52,6 +53,11 @@ let g:easytags_file = '~/.vim/tags'
 let g:easytags_async = 1
 let g:easytags_events = ['BufWritePost']
 let g:easytags_auto_highlight = 0
+" }}}
+
+
+" BUF EXPLORER {{{
+let g:bufExplorerSplitHorzSize=10
 " }}}
 
 set statusline+=%#warningmsg#
@@ -118,15 +124,16 @@ set langmap=ёйцукенгшщзхъфывапролджэячсмитьбюЁ
 " TAB SETTINGS {{{
 augroup tab_settings
     au!
-    au filetype sh,csh,tcsh,zsh           setlocal ts=4 sts=4 sw=4 et
-    au filetype php,javascript,css        setlocal ts=2 sts=2 sw=2 et tw=80
-    au filetype ruby,eruby,yaml           setlocal ts=2 sts=2 sw=2 et
-    au filetype text,txt,markdown,pandoc  setlocal ts=4 sts=4 sw=4 et tw=80
-    au filetype html,xhtml,xml            setlocal ts=4 sts=4 sw=4 et
-    au filetype slim                      setlocal ts=2 sts=2 sw=2 et
-    au filetype vim                       setlocal ts=4 sts=4 sw=4 et
-    au filetype coffee                    setlocal ts=2 sts=2 sw=2 et
-    au filetype cucumber                  setlocal ts=2 sts=2 sw=2 et
+    au filetype sh,csh,tcsh,zsh                setlocal ts=4 sts=4 sw=4 et
+    au filetype php,javascript,css             setlocal ts=2 sts=2 sw=2 et tw=80
+    au filetype ruby,eruby,yaml                setlocal ts=2 sts=2 sw=2 et
+    au filetype text,txt,markdown,pandoc       setlocal ts=4 sts=4 sw=4 et tw=80
+    au filetype html,xhtml,xml,html.handlebars setlocal ts=4 sts=4 sw=4 et
+    au filetype html.mustache                  setlocal ts=4 sts=4 sw=4 et
+    au filetype slim                           setlocal ts=2 sts=2 sw=2 et
+    au filetype vim                            setlocal ts=4 sts=4 sw=4 et
+    au filetype coffee                         setlocal ts=2 sts=2 sw=2 et
+    au filetype cucumber                       setlocal ts=2 sts=2 sw=2 et
 augroup END
 " }}}
 
@@ -139,6 +146,8 @@ set complete+=t " from tags
 " }}}
 
 " SYNTAX HIGHLIGHT {{{
+au BufNewFile,BufRead *.mustache,*.hogan,*.hulk,*.hjs set filetype=html.mustache
+au BufNewFile,BufRead *.handlebars,*.hbs set filetype=html.handlebars
 au BufNewFile,BufRead *.html.erb set filetype=html
 au BufNewFile,BufRead *.rb set filetype=ruby
 au BufNewFile,BufRead *.hamlc set filetype=haml
@@ -190,8 +199,6 @@ let NERDTreeChDirMode=2
 " }}}
 
 " AIRLINE SETTINGS {{{
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline_powerline_fonts = 0
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
@@ -230,8 +237,9 @@ function! EscapeAllString(text)
 endfunction
 
 " MAPPING {{{
-map <F1> <nop>
 nnoremap ; :
+nnoremap <silent> <F1> :CtrlPBuffer<CR>
+"nnoremap <silent> <F1> :BufExplorerHorizontalSplit<CR>
 nmap <F2> :NERDTreeToggle<CR>
 imap <F2> <Esc>:NERDTreeToggle<CR>
 nmap <F3> :TagbarToggle<CR>
@@ -256,8 +264,6 @@ vmap s" "zdi"<C-R>z"<ESC>
 vmap s( "zdi(<C-R>z)<ESC>
 vmap s[ "zdi[<C-R>z]<ESC>
 vmap s{ "zdi{<C-R>z}<ESC>
-map <C-PageUp> :bprevious<CR>
-map <C-PageDown> :bnext<CR>
 
 " bubble single lines
 nmap <C-Up> [e

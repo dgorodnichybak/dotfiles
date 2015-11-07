@@ -162,4 +162,4 @@ build_prompt() {
 }
 
 PROMPT='╭─%{%f%b%k%}$(build_prompt)
-╰─%B$%b '
+╰─ %B$%b '
