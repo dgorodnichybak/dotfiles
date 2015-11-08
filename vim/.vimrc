@@ -30,20 +30,11 @@ Plugin 'easymotion/vim-easymotion'
 Plugin 'unblevable/quick-scope'
 Plugin 'elixir-lang/vim-elixir'
 Plugin 'mustache/vim-mustache-handlebars'
+Plugin 'Shougo/unite.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
-
-" 80 symbols
-if exists('+colorcolumn')
-  set colorcolumn=80
-else
-  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
-endif
-
-"let g:ruby_doc_command='open'
-let g:qs_highlight_on_keys = ['f', 'F']
 
 " EASY TAGS OPTIONS {{{
 "
@@ -56,19 +47,22 @@ let g:easytags_auto_highlight = 0
 " }}}
 
 
-" BUF EXPLORER {{{
-let g:bufExplorerSplitHorzSize=10
+" UNITE {{{
+let g:unite_source_buffer_time_format = ""
+let g:unite_winheight = 15
+call unite#custom#profile('buffers', 'context', {'ignorecase': 1})
+call unite#filters#sorter_default#use(['sorter_word'])
 " }}}
 
+" SYNTASTIC {{{
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
-
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
-
+" }}}
 
 " GUI OPTIONS {{{
 if has("gui_running")
@@ -85,10 +79,8 @@ endif
 " GENERAL OPTIONS {{{
 au BufWinLeave * silent! mkview
 au BufWinEnter * silent! loadview
-filetype plugin indent on
 
 syntax enable
-set shell=/bin/bash
 set splitbelow
 set splitright
 set undofile
@@ -101,7 +93,6 @@ set background=dark
 colorscheme railscasts
 set scrolljump=5
 set scrolloff=3
-syntax on
 set bs=2
 set viewoptions=folds
 set nocompatible
@@ -183,6 +174,19 @@ set completeopt=longest,menuone
 " REMOVE TRAILING SPACES {{{
 autocmd BufWritePre * :%s/\s\+$//e
 " }}}
+"
+" 80 SYMBOLS LINE {{{
+if exists('+colorcolumn')
+  set colorcolumn=80
+else
+  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+endif
+" }}}
+
+" RUBYDOC {{{
+"let g:ruby_doc_command='open'
+let g:qs_highlight_on_keys = ['f', 'F']
+" }}}
 
 " NERDTree SETTINGS {{{
 let NERDTreeShowLineNumbers=1
@@ -194,7 +198,7 @@ let NERDTreeIgnore = [
             \]
 let NERDTreeShowBookmarks=1
 let NERDTreeBookmarksFile=expand("$HOME/.vim/.NERDTreeBookmarks")
-let g:NERDTreeWinSize=35
+let g:NERDTreeWinSize=40
 let NERDTreeChDirMode=2
 " }}}
 
@@ -220,13 +224,15 @@ let g:airline_symbols.whitespace = 'Ξ'
 " }}}
 
 " CTRL-P SETTINGS {{{
+let g:ctrlp_buffer_func = { 'enter': 'CtrlPMappings' }
+let g:ctrlp_match_window = 'top,order:btt,min:1,max:15,results:15'
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/]\.(git|hg|svn|tmp)$',
   \ 'file': '\v\.(exe|so|dll|log|jpeg|jpg|svg|png)$',
   \ }
 " }}}
 
-
+" ACK SETTINGS {{{
 function! VAckSearch()
     norm! gv"sy
     return ':Ack "' . EscapeAllString(@s) . '"'
@@ -235,11 +241,15 @@ endfunction
 function! EscapeAllString(text)
     return substitute(escape(a:text, '*^$.?/\|{[()]}'), '\n', '\\n', 'g')
 endfunction
+" }}}
 
 " MAPPING {{{
 nnoremap ; :
-nnoremap <silent> <F1> :CtrlPBuffer<CR>
-"nnoremap <silent> <F1> :BufExplorerHorizontalSplit<CR>
+nmap <F1> :echo<CR>
+imap <F1> <C-o>:echo<CR>
+nnoremap <silent> <F1> :Unite buffer -toggle -start-insert -profile-name=buffers -buffer-name=buffers<CR>
+
+"nnoremap <silent> <F1> :Unite buffer -toggle<CR>
 nmap <F2> :NERDTreeToggle<CR>
 imap <F2> <Esc>:NERDTreeToggle<CR>
 nmap <F3> :TagbarToggle<CR>
@@ -250,8 +260,6 @@ nmap <leader><F2> :NERDTreeFind<CR>
 imap <leader><F2> <Esc>:NERDTreeFind<CR>
 nmap <C-c> <plug>NERDCommenterToggle
 vmap <C-c> <plug>NERDCommenterToggle
-map <Leader>R :call RunCurrentSpecFile()<CR>
-map <Leader>r :call RunNearestSpec()<CR>
 nmap  <Space> <Plug>(easymotion-s)
 vmap  <Space> <Plug>(easymotion-s)
 nmap <tab> <C-W>w
