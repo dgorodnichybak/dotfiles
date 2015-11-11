@@ -247,7 +247,8 @@ endfunction
 nnoremap ; :
 nmap <F1> :echo<CR>
 imap <F1> <C-o>:echo<CR>
-nnoremap <silent> <F1> :Unite buffer -toggle -start-insert -profile-name=buffers -buffer-name=buffers<CR>
+nnoremap <silent> <F1> :Unite buffer -toggle<CR>
+"nnoremap <silent> <F1> :Unite buffer -toggle -start-insert -profile-name=buffers -buffer-name=buffers<CR>
 
 "nnoremap <silent> <F1> :Unite buffer -toggle<CR>
 nmap <F2> :NERDTreeToggle<CR>

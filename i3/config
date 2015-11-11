@@ -1,13 +1,13 @@
 # Autostart
 exec compton # compton package
 exec volumeicon # volumeicon-alas package
-exec feh --bg-scale ~/Dropbox/bg.png
+exec feh --bg-scale ~/Dropbox/14469725079800.jpg
 exec dropbox start
-exec skype
-exec yandex-browser
-exec gnome-terminal
 #exec sakura
 exec setxkbmap -model pc104 -layout us,ru -variant , -option grp:alt_shift_toggle
+exec xrandr --auto --output eDP1 --left-of DP1
+exec xrandr --output eDP1 --mode 1600x900
+exec xrandr --output DP1 --mode 1920x1200
 
 
 # i3 config file (v4)
@@ -24,7 +24,7 @@ exec setxkbmap -model pc104 -layout us,ru -variant , -option grp:alt_shift_toggl
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below. ISO 10646 = Unicode
 #font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
-font xft:Terminus, FontAwesome 8
+font xft:Terminus, FontAwesome 12
 # The font above is very space-efficient, that is, it looks good, sharp and
 # clear in small sizes. However, if you need a lot of unicode glyphs or
 # right-to-left text rendering, you should instead use pango for rendering and
@@ -42,7 +42,7 @@ bindsym Mod4+Return exec gnome-terminal
 bindsym Mod4+Escape kill
 
 # start dmenu (a program launcher)
-bindsym Mod4+d exec dmenu_run
+bindsym Mod4+d exec rofi -show run
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
@@ -137,11 +137,10 @@ bindsym Mod4+Shift+r restart
 bindsym Mod4+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # class                  border  backgr. text    indicator
- client.focused          #8f8f8f #8f8f8f #ffffff #444444
+ client.focused          #FFA366 #FFA366 #ffffff #444444
  client.focused_inactive #222222 #222222 #ffffff #444444
  client.unfocused        #222222 #222222 #888888 #444444
  client.urgent           #F86A59 #F86A59 #ffffff #000000
-
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -169,7 +168,7 @@ mode "resize" {
 
 bindsym Mod4+r mode "resize"
 
-for_window [class="^.*"] border pixel 1
+for_window [class="^.*"] border pixel 2
 for_window [class="Xfce4-notifyd"] floating enable; border none; focus mode_toggle
 #for_window [title="Controlled multi-tab browsing"] floating enable; border none; focus mode_toggle; move right 332px,move up 213px
 for_window [title="Controlled multi-tab browsing"] floating enable move right 712px,move up 373px
@@ -177,9 +176,9 @@ for_window [title="Controlled multi-tab browsing"] floating enable move right 71
 
 for_window [class="Skype"] move container to workspace 3
 for_window [class="Sakura"] move container to workspace 1
-for_window [class="Chromium"] move container to workspace 2
-for_window [class="Firefox"] move container to workspace 2
-for_window [class="Yandex-browser"] move container to workspace 2
+for_window [class="Chromium"] move container to workspace 1
+for_window [class="Firefox"] move container to workspace 1
+for_window [class="Yandex-browser"] move container to workspace 1
 
 # keybinding for home keyboard
 bindsym XF86AudioLowerVolume exec amixer -c 1 -q set Master 5%-
