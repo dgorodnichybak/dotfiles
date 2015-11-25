@@ -13,10 +13,11 @@ Plugin 'bling/vim-airline'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'majutsushi/tagbar'
 Plugin 'lucapette/vim-ruby-doc'
-Plugin 'kchmck/vim-coffee-script'
+"Plugin 'kchmck/vim-coffee-script'
 Plugin 'pangloss/vim-javascript'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-rails'
+Plugin 'vim-ruby/vim-ruby'
 Plugin 'sjl/gundo.vim'
 Plugin 'gcmt/wildfire.vim'
 Plugin 'mileszs/ack.vim'
@@ -25,12 +26,13 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'xolox/vim-easytags'
 Plugin 'xolox/vim-misc'
 Plugin 'thoughtbot/vim-rspec'
-Plugin 'scrooloose/syntastic'
+"Plugin 'scrooloose/syntastic'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'unblevable/quick-scope'
 Plugin 'elixir-lang/vim-elixir'
 Plugin 'mustache/vim-mustache-handlebars'
 Plugin 'Shougo/unite.vim'
+Plugin 'heartsentwined/vim-emblem'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -139,6 +141,7 @@ set complete+=t " from tags
 " SYNTAX HIGHLIGHT {{{
 au BufNewFile,BufRead *.mustache,*.hogan,*.hulk,*.hjs set filetype=html.mustache
 au BufNewFile,BufRead *.handlebars,*.hbs set filetype=html.handlebars
+au BufNewFile,BufRead *.embl set filetype=html.emblem
 au BufNewFile,BufRead *.html.erb set filetype=html
 au BufNewFile,BufRead *.rb set filetype=ruby
 au BufNewFile,BufRead *.hamlc set filetype=haml
@@ -168,6 +171,14 @@ autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType c set omnifunc=ccomplete#Complete
 autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
+
+autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
+autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
+autocmd FileType ruby,eruby let g:rubycomplete_load_gemfile = 1
+autocmd FileType ruby,eruby let g:rubycomplete_include_object = 1
+autocmd FileType ruby,eruby let g:rubycomplete_include_objectspace = 1
+
 set completeopt=longest,menuone
 " }}}
 

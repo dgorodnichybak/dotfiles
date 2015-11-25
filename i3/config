@@ -5,9 +5,11 @@ exec feh --bg-scale ~/Dropbox/14469725079800.jpg
 exec dropbox start
 #exec sakura
 exec setxkbmap -model pc104 -layout us,ru -variant , -option grp:alt_shift_toggle
-exec xrandr --auto --output eDP1 --left-of DP1
-exec xrandr --output eDP1 --mode 1600x900
-exec xrandr --output DP1 --mode 1920x1200
+
+#TODO Need to fix
+#exec xrandr --output eDP1 --mode 1600x900
+#exec xrandr --output DP1 --mode 1920x1200
+#exec xrandr --auto --output eDP1 --left-of DP1
 
 
 # i3 config file (v4)
@@ -176,9 +178,9 @@ for_window [title="Controlled multi-tab browsing"] floating enable move right 71
 
 for_window [class="Skype"] move container to workspace 3
 for_window [class="Sakura"] move container to workspace 1
-for_window [class="Chromium"] move container to workspace 1
-for_window [class="Firefox"] move container to workspace 1
-for_window [class="Yandex-browser"] move container to workspace 1
+for_window [class="Chromium"] move container to workspace 2
+for_window [class="Firefox"] move container to workspace 2
+for_window [class="Yandex-browser"] move container to workspace 2
 
 # keybinding for home keyboard
 bindsym XF86AudioLowerVolume exec amixer -c 1 -q set Master 5%-
