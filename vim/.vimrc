@@ -48,6 +48,8 @@ let g:easytags_events = ['BufWritePost']
 let g:easytags_auto_highlight = 0
 " }}}
 
+let g:ruby_debugger_debug_mode = 1
+
 
 " UNITE {{{
 let g:unite_source_buffer_time_format = ""
@@ -142,6 +144,7 @@ set complete+=t " from tags
 au BufNewFile,BufRead *.mustache,*.hogan,*.hulk,*.hjs set filetype=html.mustache
 au BufNewFile,BufRead *.handlebars,*.hbs set filetype=html.handlebars
 au BufNewFile,BufRead *.embl set filetype=html.emblem
+au BufNewFile,BufRead *.es6 set filetype=javascript
 au BufNewFile,BufRead *.html.erb set filetype=html
 au BufNewFile,BufRead *.rb set filetype=ruby
 au BufNewFile,BufRead *.hamlc set filetype=haml
@@ -252,9 +255,13 @@ endfunction
 function! EscapeAllString(text)
     return substitute(escape(a:text, '*^$.?/\|{[()]}'), '\n', '\\n', 'g')
 endfunction
+
+let g:ack_default_options = ' -s -H --nocolor --nogroup --column'
+let g:ackhighlight = 1
 " }}}
 
 " MAPPING {{{
+
 nnoremap ; :
 nmap <F1> :echo<CR>
 imap <F1> <C-o>:echo<CR>
@@ -262,6 +269,7 @@ nnoremap <silent> <F1> :Unite buffer -toggle<CR>
 "nnoremap <silent> <F1> :Unite buffer -toggle -start-insert -profile-name=buffers -buffer-name=buffers<CR>
 
 "nnoremap <silent> <F1> :Unite buffer -toggle<CR>
+nnoremap <C-c> <silent> <C-c>
 nmap <F2> :NERDTreeToggle<CR>
 imap <F2> <Esc>:NERDTreeToggle<CR>
 nmap <F3> :TagbarToggle<CR>

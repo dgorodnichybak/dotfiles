@@ -1,17 +1,28 @@
-rofi.opacity: 95
-rofi.lines: 7
-rofi.width: 500
-rofi.columns: 1
-rofi.font: Ubuntu Mono Bold 12
+!rofi.opacity: 95
+!rofi.lines: 7
+!rofi.width: 500
+!rofi.font: Ubuntu Mono Bold 12
 rofi.fg: #E5DBCF
 rofi.bg: #0F3B5F
 rofi.hlfg: #0F3B5F
 rofi.hlbg: #CC9752
 rofi.bc: #CC9752
-rofi.bw: 2
+!rofi.bw: 2
+!rofi.fixed-num-lines: true
+!rofi.hmode: false
+!rofi.terminal: x-terminal-emulator
+!rofi.ssh-set-title: true
+!rofi.disable-history: true
+!
+
 rofi.separator-style: solid
-rofi.fixed-num-lines: true
-rofi.hmode: false
-rofi.terminal: x-terminal-emulator
-rofi.ssh-set-title: true
-rofi.disable-history: true
+rofi.columns: 1
+rofi.opacity:           90
+rofi.width:             340
+rofi.lines:             5
+rofi.font:              Ubuntu Mono Bold 12
+!rofi.separator-style:   none
+rofi.hide-scrollbar:    true
+rofi.padding:           40
+rofi.eh:                2
+rofi.bw:                0
