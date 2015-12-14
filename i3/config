@@ -1,15 +1,18 @@
 # Autostart
 exec compton # compton package
 exec volumeicon # volumeicon-alas package
-exec feh --bg-scale ~/Dropbox/14469725079800.jpg
+exec feh --bg-scale ~/Dropbox/wallpaper-2905721.jpg
 exec dropbox start
 #exec sakura
+exec nm-applet
 exec setxkbmap -model pc104 -layout us,ru -variant , -option grp:alt_shift_toggle
 
+force_xinerama yes
+
 #TODO Need to fix
-#exec xrandr --output eDP1 --mode 1600x900
-#exec xrandr --output DP1 --mode 1920x1200
-#exec xrandr --auto --output eDP1 --left-of DP1
+#exec xrandr --output eDP-1-0 --mode 1920x1080
+#exec xrandr --output DisplayPort-1-0 --mode 1920x1200
+exec xrandr --auto --output eDP1 --left-of DP1
 
 
 # i3 config file (v4)
@@ -26,7 +29,7 @@ exec setxkbmap -model pc104 -layout us,ru -variant , -option grp:alt_shift_toggl
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below. ISO 10646 = Unicode
 #font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
-font xft:Terminus, FontAwesome 12
+font xft:Terminus, FontAwesome 14
 # The font above is very space-efficient, that is, it looks good, sharp and
 # clear in small sizes. However, if you need a lot of unicode glyphs or
 # right-to-left text rendering, you should instead use pango for rendering and
@@ -37,7 +40,7 @@ font xft:Terminus, FontAwesome 12
 floating_modifier Mod4
 
 # start a terminal
-#bindsym Mod4+Return exec sakura
+#bindsym Mod4+Return exec sakura -l
 bindsym Mod4+Return exec gnome-terminal
 
 # kill focused window
@@ -171,25 +174,33 @@ mode "resize" {
 bindsym Mod4+r mode "resize"
 
 for_window [class="^.*"] border pixel 2
+for_window [class="Chromium"] border pixel 0
 for_window [class="Xfce4-notifyd"] floating enable; border none; focus mode_toggle
 #for_window [title="Controlled multi-tab browsing"] floating enable; border none; focus mode_toggle; move right 332px,move up 213px
 for_window [title="Controlled multi-tab browsing"] floating enable move right 712px,move up 373px
 #for_window [window_role="pop-up"] floating enable
 
 for_window [class="Skype"] move container to workspace 3
-for_window [class="Sakura"] move container to workspace 1
 for_window [class="Chromium"] move container to workspace 2
-for_window [class="Firefox"] move container to workspace 2
+for_window [class="Firefox"] move container to workspace 9
 for_window [class="Yandex-browser"] move container to workspace 2
 
+bindcode 107 exec scrot -e 'mv $f ~/Screenshots/'
+#bindcode 69 exec ~/.i3/keyboard_brightless_dec
+#bindcode 70 exec ~/.i3/keyboard_brightless_inc
+
 # keybinding for home keyboard
-bindsym XF86AudioLowerVolume exec amixer -c 1 -q set Master 5%-
-bindsym XF86AudioRaiseVolume exec amixer -c 1 -q set Master 5%+
+#bindsym XF86AudioLowerVolume exec amixer -c 1 -q set Master 5%-
+#bindsym XF86AudioRaiseVolume exec amixer -c 1 -q set Master 5%+
 
 # keybinding for office keyboard
 #bindsym Control+Shift+Up exec amixer -c 0 -q set Master 5%+
 #bindsym Control+Shift+Down exec amixer -c 0 -q set Master 5%-
-bindcode 107 exec scrot -e 'mv $f ~/Screenshots/'
+#bindsym XF86MonBrightnessDown exec xbacklight -dec 20
+#bindsym XF86MonBrightnessUp exec xbacklight -inc 10
+bindsym XF86KbdBrightnessUp exec ~/.i3/keyboard_brightless_inc
+bindsym XF86KbdBrightnessDown exec ~/.i3/keyboard_brightless_dec
+bindsym XF86TouchpadToggle exec ~/.i3/toggletouchpad
 
 
 
