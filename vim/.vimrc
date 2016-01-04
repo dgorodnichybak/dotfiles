@@ -7,10 +7,11 @@ call vundle#begin()
 
 " BUNDLES LIST {{{
 Plugin 'gmarik/Vundle.vim'
-Plugin 'scrooloose/nerdtree'
+" Plugin 'scrooloose/nerdtree'
+Plugin 'Shougo/vimfiler.vim'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'bling/vim-airline'
-Plugin 'scrooloose/nerdcommenter'
+Plugin 'tpope/vim-commentary'
 Plugin 'majutsushi/tagbar'
 Plugin 'lucapette/vim-ruby-doc'
 "Plugin 'kchmck/vim-coffee-script'
@@ -37,6 +38,35 @@ Plugin 'heartsentwined/vim-emblem'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
+
+if has('gui_running')
+    colorscheme hybrid
+    set background=dark
+    set guifont=Ubuntu\ Mono\ 17
+    set guioptions-=m
+    set guioptions-=T
+    set guioptions-=l
+    set guioptions-=L
+    set guioptions-=r
+    set guioptions-=R
+else
+    set background=dark
+    colorscheme hybrid
+endif
+
+
+let g:loaded_netrwPlugin = 1
+let g:vimfiler_directory_display_top = 1
+let g:vimfiler_as_default_explorer = 1
+let g:vimfiler_tree_leaf_icon = ''
+let g:vimfiler_tree_opened_icon = '▾'
+let g:vimfiler_tree_closed_icon = '▸'
+let g:vimfiler_default_columns = ''
+let g:vimfiler_explorer_columns = ''
+
+call vimfiler#custom#profile('default', 'context', {
+            \ 'safe' : 0,
+            \ })
 
 " EASY TAGS OPTIONS {{{
 "
@@ -68,18 +98,6 @@ let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 " }}}
 
-" GUI OPTIONS {{{
-if has("gui_running")
-    set guioptions-=m
-    set guioptions-=T
-    set guioptions-=l
-    set guioptions-=L
-    set guioptions-=r
-    set guioptions-=R
-    set guifont=Menlo\ for\ Powerline:h14
-endif
-" }}}
-
 " GENERAL OPTIONS {{{
 au BufWinLeave * silent! mkview
 au BufWinEnter * silent! loadview
@@ -93,8 +111,8 @@ set backup
 set backupdir=~/.vim/backups
 set directory=~/.vim/swaps
 set t_Co=256
-set background=dark
-colorscheme railscasts
+"set background=dark
+"colorscheme railscasts
 set scrolljump=5
 set scrolloff=3
 set bs=2
@@ -217,6 +235,7 @@ let NERDTreeChDirMode=2
 " }}}
 
 " AIRLINE SETTINGS {{{
+let g:airline_theme = "hybrid"
 let g:airline_powerline_fonts = 0
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
@@ -265,21 +284,16 @@ let g:ackhighlight = 1
 nnoremap ; :
 nmap <F1> :echo<CR>
 imap <F1> <C-o>:echo<CR>
-nnoremap <silent> <F1> :Unite buffer -toggle<CR>
-"nnoremap <silent> <F1> :Unite buffer -toggle -start-insert -profile-name=buffers -buffer-name=buffers<CR>
-
-"nnoremap <silent> <F1> :Unite buffer -toggle<CR>
+nnoremap <silent> <F1> :Unite buffer:- -toggle<CR>
 nnoremap <C-c> <silent> <C-c>
-nmap <F2> :NERDTreeToggle<CR>
-imap <F2> <Esc>:NERDTreeToggle<CR>
+nmap <F2> :VimFiler -split -simple -winwidth=35 -toggle -force-quit -project<CR>
+imap <F2> <Esc>:VimFiler -split -simple -winwidth=35 -toggle -force-quit -project<CR>
 nmap <F3> :TagbarToggle<CR>
 imap <F3> <Esc>:TagbarToggle<CR>
 nmap <F4> :GundoToggle<CR>
 imap <F4> <Esc>:GundoToggle<CR>
-nmap <leader><F2> :NERDTreeFind<CR>
-imap <leader><F2> <Esc>:NERDTreeFind<CR>
-nmap <C-c> <plug>NERDCommenterToggle
-vmap <C-c> <plug>NERDCommenterToggle
+nmap <leader><F2> :VimFiler -split -simple -winwidth=35 -toggle -force-quit -find<CR>
+imap <leader><F2> <Esc>:VimFiler -split -simple -winwidth=35 -toggle -force-quit -find<CR>
 nmap  <Space> <Plug>(easymotion-s)
 vmap  <Space> <Plug>(easymotion-s)
 nmap <tab> <C-W>w
