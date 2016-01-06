@@ -286,8 +286,8 @@ nmap <F1> :echo<CR>
 imap <F1> <C-o>:echo<CR>
 nnoremap <silent> <F1> :Unite buffer:- -toggle<CR>
 nnoremap <C-c> <silent> <C-c>
-nmap <F2> :VimFiler -split -simple -winwidth=35 -toggle -force-quit -project<CR>
-imap <F2> <Esc>:VimFiler -split -simple -winwidth=35 -toggle -force-quit -project<CR>
+nmap <F2> :VimFiler -split -simple -winwidth=35 -toggle -force-hide<CR>
+imap <F2> <Esc>:VimFiler -split -simple -winwidth=35 -toggle -force-hide<CR>
 nmap <F3> :TagbarToggle<CR>
 imap <F3> <Esc>:TagbarToggle<CR>
 nmap <F4> :GundoToggle<CR>
