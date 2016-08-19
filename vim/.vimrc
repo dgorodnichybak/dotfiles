@@ -7,40 +7,41 @@ call vundle#begin()
 
 " BUNDLES LIST {{{
 Plugin 'gmarik/Vundle.vim'
-" Plugin 'scrooloose/nerdtree'
-Plugin 'Shougo/vimfiler.vim'
+Plugin 'scrooloose/nerdtree'
+" Plugin 'Shougo/vimfiler.vim'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-commentary'
 Plugin 'majutsushi/tagbar'
 Plugin 'lucapette/vim-ruby-doc'
-"Plugin 'kchmck/vim-coffee-script'
+Plugin 'kchmck/vim-coffee-script'
 Plugin 'pangloss/vim-javascript'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-rails'
 Plugin 'vim-ruby/vim-ruby'
-Plugin 'sjl/gundo.vim'
-Plugin 'gcmt/wildfire.vim'
+" Plugin 'sjl/gundo.vim'
+" Plugin 'gcmt/wildfire.vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'tpope/vim-endwise'
 Plugin 'kien/ctrlp.vim'
 Plugin 'xolox/vim-easytags'
 Plugin 'xolox/vim-misc'
-Plugin 'thoughtbot/vim-rspec'
 "Plugin 'scrooloose/syntastic'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'unblevable/quick-scope'
-Plugin 'elixir-lang/vim-elixir'
+" Plugin 'elixir-lang/vim-elixir'
 Plugin 'mustache/vim-mustache-handlebars'
 Plugin 'Shougo/unite.vim'
 Plugin 'heartsentwined/vim-emblem'
+" Plugin 'ngmy/vim-rubocop'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
 
 if has('gui_running')
-    colorscheme hybrid
+    " colorscheme Tomorrow-Night
+    colorscheme railscasts2
     set background=dark
     set guifont=Ubuntu\ Mono\ 17
     set guioptions-=m
@@ -51,22 +52,23 @@ if has('gui_running')
     set guioptions-=R
 else
     set background=dark
-    colorscheme hybrid
+    colorscheme railscasts2
+    " colorscheme Tomorrow-Night
 endif
 
 
-let g:loaded_netrwPlugin = 1
-let g:vimfiler_directory_display_top = 1
-let g:vimfiler_as_default_explorer = 1
-let g:vimfiler_tree_leaf_icon = ''
-let g:vimfiler_tree_opened_icon = '▾'
-let g:vimfiler_tree_closed_icon = '▸'
-let g:vimfiler_default_columns = ''
-let g:vimfiler_explorer_columns = ''
+" let g:loaded_netrwPlugin = 1
+" let g:vimfiler_directory_display_top = 1
+" " let g:vimfiler_as_default_explorer = 1
+" let g:vimfiler_tree_leaf_icon = ''
+" let g:vimfiler_tree_opened_icon = '▾'
+" let g:vimfiler_tree_closed_icon = '▸'
+" let g:vimfiler_default_columns = ''
+" " let g:vimfiler_explorer_columns = ''
 
-call vimfiler#custom#profile('default', 'context', {
-            \ 'safe' : 0,
-            \ })
+" call vimfiler#custom#profile('default', 'context', {
+"             \ 'safe' : 0,
+"             \ })
 
 " EASY TAGS OPTIONS {{{
 "
@@ -103,6 +105,7 @@ au BufWinLeave * silent! mkview
 au BufWinEnter * silent! loadview
 
 syntax enable
+set cursorline
 set splitbelow
 set splitright
 set undofile
@@ -150,7 +153,7 @@ augroup tab_settings
 augroup END
 " }}}
 
-" OMNI COMPLITIONS dictionary {{{
+" OMNI COMPLETIONS dictionary {{{
 set complete=""
 set complete+=. " from bufer
 set complete+=k " from dictionary
@@ -235,7 +238,7 @@ let NERDTreeChDirMode=2
 " }}}
 
 " AIRLINE SETTINGS {{{
-let g:airline_theme = "hybrid"
+" let g:airline_theme = "tomorrow"
 let g:airline_powerline_fonts = 0
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
@@ -260,7 +263,7 @@ let g:airline_symbols.whitespace = 'Ξ'
 let g:ctrlp_buffer_func = { 'enter': 'CtrlPMappings' }
 let g:ctrlp_match_window = 'top,order:btt,min:1,max:15,results:15'
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn|tmp)$',
+  \ 'dir':  '\v[\/]\.(git|hg|svn|tmp|forum|log|public|bundle)$',
   \ 'file': '\v\.(exe|so|dll|log|jpeg|jpg|svg|png)$',
   \ }
 " }}}
@@ -279,6 +282,17 @@ let g:ack_default_options = ' -s -H --nocolor --nogroup --column'
 let g:ackhighlight = 1
 " }}}
 
+" FUGITIVE {{{
+function! ToggleGStatus()
+    if buflisted(bufname('.git/index'))
+        bd .git/index
+    else
+        Gstatus
+    endif
+endfunction
+command ToggleGStatus :call ToggleGStatus()
+" }}}
+
 " MAPPING {{{
 
 nnoremap ; :
@@ -286,14 +300,19 @@ nmap <F1> :echo<CR>
 imap <F1> <C-o>:echo<CR>
 nnoremap <silent> <F1> :Unite buffer:- -toggle<CR>
 nnoremap <C-c> <silent> <C-c>
-nmap <F2> :VimFiler -split -simple -winwidth=35 -toggle -force-hide<CR>
-imap <F2> <Esc>:VimFiler -split -simple -winwidth=35 -toggle -force-hide<CR>
+" nmap <F2> :VimFiler -split -simple -winwidth=55 -toggle -force-hide<CR>
+" imap <F2> <Esc>:VimFiler -split -simple -winwidth=35 -toggle -force-hide<CR>
+nmap <F2> :NERDTreeToggle<CR>
+imap <F2> <Esc>:NERDTreeToggle<CR>
+nmap <leader><F2> :NERDTreeFind<CR>
+imap <leader><F2> <Esc>:NERDTreeFind<CR>
 nmap <F3> :TagbarToggle<CR>
 imap <F3> <Esc>:TagbarToggle<CR>
 nmap <F4> :GundoToggle<CR>
 imap <F4> <Esc>:GundoToggle<CR>
-nmap <leader><F2> :VimFiler -split -simple -winwidth=35 -toggle -force-quit -find<CR>
-imap <leader><F2> <Esc>:VimFiler -split -simple -winwidth=35 -toggle -force-quit -find<CR>
+nmap <F5> :ToggleGStatus<CR>
+" nmap <leader><F2> :VimFiler -split -simple -winwidth=35 -toggle -force-quit -find<CR>
+" imap <leader><F2> <Esc>:VimFiler -split -simple -winwidth=35 -toggle -force-quit -find<CR>
 nmap  <Space> <Plug>(easymotion-s)
 vmap  <Space> <Plug>(easymotion-s)
 nmap <tab> <C-W>w
@@ -306,6 +325,10 @@ vmap s" "zdi"<C-R>z"<ESC>
 vmap s( "zdi(<C-R>z)<ESC>
 vmap s[ "zdi[<C-R>z]<ESC>
 vmap s{ "zdi{<C-R>z}<ESC>
+
+" autocmd FileType vimfiler nmap <silent><buffer><expr> <CR> vimfiler#smart_cursor_map(
+" \ "\<Plug>(vimfiler_expand_tree)",
+" \ "\<Plug>(vimfiler_edit_file)")
 
 " bubble single lines
 nmap <C-Up> [e
