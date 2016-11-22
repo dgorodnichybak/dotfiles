@@ -20,7 +20,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-rails'
 Plugin 'vim-ruby/vim-ruby'
 " Plugin 'sjl/gundo.vim'
-" Plugin 'gcmt/wildfire.vim'
+Plugin 'gcmt/wildfire.vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'tpope/vim-endwise'
 Plugin 'kien/ctrlp.vim'
@@ -239,14 +239,12 @@ let NERDTreeChDirMode=2
 
 " AIRLINE SETTINGS {{{
 " let g:airline_theme = "tomorrow"
-let g:airline_powerline_fonts = 0
+let g:airline_powerline_fonts = 1
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
 
-let g:airline_left_sep = '»'
 let g:airline_left_sep = ''
-let g:airline_right_sep = '«'
 let g:airline_right_sep = ''
 let g:airline_symbols.linenr = '␊'
 let g:airline_symbols.linenr = '␤'
@@ -296,12 +294,11 @@ command ToggleGStatus :call ToggleGStatus()
 " MAPPING {{{
 
 nnoremap ; :
+nmap Q <Nop>
 nmap <F1> :echo<CR>
 imap <F1> <C-o>:echo<CR>
 nnoremap <silent> <F1> :Unite buffer:- -toggle<CR>
 nnoremap <C-c> <silent> <C-c>
-" nmap <F2> :VimFiler -split -simple -winwidth=55 -toggle -force-hide<CR>
-" imap <F2> <Esc>:VimFiler -split -simple -winwidth=35 -toggle -force-hide<CR>
 nmap <F2> :NERDTreeToggle<CR>
 imap <F2> <Esc>:NERDTreeToggle<CR>
 nmap <leader><F2> :NERDTreeFind<CR>
@@ -311,8 +308,6 @@ imap <F3> <Esc>:TagbarToggle<CR>
 nmap <F4> :GundoToggle<CR>
 imap <F4> <Esc>:GundoToggle<CR>
 nmap <F5> :ToggleGStatus<CR>
-" nmap <leader><F2> :VimFiler -split -simple -winwidth=35 -toggle -force-quit -find<CR>
-" imap <leader><F2> <Esc>:VimFiler -split -simple -winwidth=35 -toggle -force-quit -find<CR>
 nmap  <Space> <Plug>(easymotion-s)
 vmap  <Space> <Plug>(easymotion-s)
 nmap <tab> <C-W>w
@@ -325,10 +320,6 @@ vmap s" "zdi"<C-R>z"<ESC>
 vmap s( "zdi(<C-R>z)<ESC>
 vmap s[ "zdi[<C-R>z]<ESC>
 vmap s{ "zdi{<C-R>z}<ESC>
-
-" autocmd FileType vimfiler nmap <silent><buffer><expr> <CR> vimfiler#smart_cursor_map(
-" \ "\<Plug>(vimfiler_expand_tree)",
-" \ "\<Plug>(vimfiler_edit_file)")
 
 " bubble single lines
 nmap <C-Up> [e
