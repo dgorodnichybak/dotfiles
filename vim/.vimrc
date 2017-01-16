@@ -8,7 +8,6 @@ call vundle#begin()
 " BUNDLES LIST {{{
 Plugin 'gmarik/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
-" Plugin 'Shougo/vimfiler.vim'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-commentary'
@@ -19,21 +18,22 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-rails'
 Plugin 'vim-ruby/vim-ruby'
-" Plugin 'sjl/gundo.vim'
 Plugin 'gcmt/wildfire.vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'tpope/vim-endwise'
 Plugin 'kien/ctrlp.vim'
 Plugin 'xolox/vim-easytags'
 Plugin 'xolox/vim-misc'
-"Plugin 'scrooloose/syntastic'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'unblevable/quick-scope'
-" Plugin 'elixir-lang/vim-elixir'
 Plugin 'mustache/vim-mustache-handlebars'
 Plugin 'Shougo/unite.vim'
 Plugin 'heartsentwined/vim-emblem'
-" Plugin 'ngmy/vim-rubocop'
+Plugin 'mxw/vim-jsx'
+Plugin 'sirver/ultisnips'
+Plugin 'honza/vim-snippets'
+Plugin 'valloric/youcompleteme'
+Plugin 'ervandew/supertab'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -56,19 +56,20 @@ else
     " colorscheme Tomorrow-Night
 endif
 
+let g:ycm_use_ultisnips_completer = 1
 
-" let g:loaded_netrwPlugin = 1
-" let g:vimfiler_directory_display_top = 1
-" " let g:vimfiler_as_default_explorer = 1
-" let g:vimfiler_tree_leaf_icon = ''
-" let g:vimfiler_tree_opened_icon = '▾'
-" let g:vimfiler_tree_closed_icon = '▸'
-" let g:vimfiler_default_columns = ''
-" " let g:vimfiler_explorer_columns = ''
+" make YCM compatible with UltiSnips (using supertab)
+" let g:ycm_auto_trigger=0
+let g:ycm_min_num_of_chars_for_completion = 3
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:ycm_filetype_specific_completion_to_disable = { 'ruby': 1 }
+let g:SuperTabDefaultCompletionType = '<C-n>'
 
-" call vimfiler#custom#profile('default', 'context', {
-"             \ 'safe' : 0,
-"             \ })
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 " EASY TAGS OPTIONS {{{
 "
