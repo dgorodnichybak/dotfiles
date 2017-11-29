@@ -127,6 +127,10 @@ prompt_rvm() {
   prompt_segment default red "`rvm-prompt i v g`"
 }
 
+prompt_rbenv() {
+  prompt_segment default red "`rbenv local`"
+}
+
 # Virtualenv: current working virtualenv
 prompt_virtualenv() {
   local virtualenv_path="$VIRTUAL_ENV"
@@ -155,7 +159,7 @@ build_prompt() {
   prompt_status
   prompt_virtualenv
   prompt_dir
-  prompt_rvm
+  prompt_rbenv
   prompt_git
   prompt_hg
   prompt_end

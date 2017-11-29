@@ -11,4 +11,4 @@ echo '[],'
 
 # Now send blocks with information forever:
 #exec ~/.i3/dzen2 < ~/.i3/dzen2
-exec conky -c ~/.i3/conkyrc
+exec conky -c ~/.config/i3/conkyrc

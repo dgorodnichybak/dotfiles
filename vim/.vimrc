@@ -11,10 +11,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-commentary'
-Plugin 'majutsushi/tagbar'
 Plugin 'lucapette/vim-ruby-doc'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'pangloss/vim-javascript'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-rails'
 Plugin 'vim-ruby/vim-ruby'
@@ -28,12 +25,14 @@ Plugin 'easymotion/vim-easymotion'
 Plugin 'unblevable/quick-scope'
 Plugin 'mustache/vim-mustache-handlebars'
 Plugin 'Shougo/unite.vim'
-Plugin 'heartsentwined/vim-emblem'
-Plugin 'mxw/vim-jsx'
 Plugin 'sirver/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'valloric/youcompleteme'
 Plugin 'ervandew/supertab'
+Plugin 'posva/vim-vue'
+Plugin 'slim-template/vim-slim.git'
+Plugin 'thoughtbot/vim-rspec'
+" Plugin 'w0rp/ale'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -41,25 +40,35 @@ filetype plugin indent on    " required
 
 if has('gui_running')
     " colorscheme Tomorrow-Night
-    colorscheme railscasts2
+    colorscheme hybrid
+    " colorscheme railscasts2
     set background=dark
-    set guifont=Ubuntu\ Mono\ 17
+    set guifont=Monaco\ for\ Powerline:h16
     set guioptions-=m
     set guioptions-=T
     set guioptions-=l
     set guioptions-=L
     set guioptions-=r
     set guioptions-=R
+    set clipboard=unnamed
+    set mouse=a
+    if has("mouse_sgr")
+        set ttymouse=sgr
+    else
+        set ttymouse=xterm2
+    end
 else
     set background=dark
-    colorscheme railscasts2
+    colorscheme hybrid
     " colorscheme Tomorrow-Night
 endif
 
 let g:ycm_use_ultisnips_completer = 1
 
+let g:jsx_ext_required = 0
+
 " make YCM compatible with UltiSnips (using supertab)
-" let g:ycm_auto_trigger=0
+" let g:ycm_auto_trigger=1
 let g:ycm_min_num_of_chars_for_completion = 3
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
@@ -75,10 +84,15 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 "
 " example:
 " :UpdateTags -R ~/Projects/music_at_menlo/
+set tags=./tags;
 let g:easytags_file = '~/.vim/tags'
 let g:easytags_async = 1
-let g:easytags_events = ['BufWritePost']
+" let g:easytags_events = ['BufUnload']
+let g:easytags_updatetime_min = 20000
 let g:easytags_auto_highlight = 0
+let g:easytags_dynamic_files = 1
+let g:easytags_on_cursorhold = 0
+let g:easytags_auto_update = 0
 " }}}
 
 let g:ruby_debugger_debug_mode = 1
@@ -91,14 +105,22 @@ call unite#custom#profile('buffers', 'context', {'ignorecase': 1})
 call unite#filters#sorter_default#use(['sorter_word'])
 " }}}
 
+" RSPEC {{{
+let g:rspec_runner = "os_x_iterm2"
+map <Leader>t :call RunCurrentSpecFile()<CR>
+map <Leader>s :call RunNearestSpec()<CR>
+map <Leader>l :call RunLastSpec()<CR>
+map <Leader>a :call RunAllSpecs()<CR>
+" }}}
+
 " SYNTASTIC {{{
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 0
+" let g:syntastic_check_on_wq = 0
 " }}}
 
 " GENERAL OPTIONS {{{
@@ -145,12 +167,14 @@ augroup tab_settings
     au filetype php,javascript,css             setlocal ts=2 sts=2 sw=2 et tw=80
     au filetype ruby,eruby,yaml                setlocal ts=2 sts=2 sw=2 et
     au filetype text,txt,markdown,pandoc       setlocal ts=4 sts=4 sw=4 et tw=80
-    au filetype html,xhtml,xml,html.handlebars setlocal ts=4 sts=4 sw=4 et
-    au filetype html.mustache                  setlocal ts=4 sts=4 sw=4 et
+    au filetype html,xhtml,xml,html.handlebars setlocal ts=2 sts=2 sw=2 et
+    au filetype html.mustache                  setlocal ts=2 sts=2 sw=2 et
     au filetype slim                           setlocal ts=2 sts=2 sw=2 et
     au filetype vim                            setlocal ts=4 sts=4 sw=4 et
     au filetype coffee                         setlocal ts=2 sts=2 sw=2 et
     au filetype cucumber                       setlocal ts=2 sts=2 sw=2 et
+    au filetype json                           setlocal ts=2 sts=2 sw=2 et
+    au filetype vue                            setlocal ts=2 sts=2 sw=2 et
 augroup END
 " }}}
 
@@ -184,6 +208,7 @@ au BufRead,BufNewFile *.less set syntax=less
 au BufNewFile,BufReadPost *.json set filetype=json
 au BufNewFile,BufRead *.coffee set filetype=coffee
 au BufWrite *.rb set filetype=ruby
+autocmd BufRead,BufNewFile *.vue setlocal filetype=vue
 " }}}
 
 " OMNI COMPLITION on {{{
@@ -292,12 +317,20 @@ endfunction
 command ToggleGStatus :call ToggleGStatus()
 " }}}
 
+" BINDING.PRY {{{
+function AddDebug()
+  execute "normal obinding.pry\<Esc>"
+endfunction
+" }}}
+
+
 " MAPPING {{{
 
 nnoremap ; :
+nmap <F1> <nop>
 nmap Q <Nop>
-nmap <F1> :echo<CR>
-imap <F1> <C-o>:echo<CR>
+" nmap <F1> :echo<CR>
+" imap <F1> <C-o>:echo<CR>
 nnoremap <silent> <F1> :Unite buffer:- -toggle<CR>
 nnoremap <C-c> <silent> <C-c>
 nmap <F2> :NERDTreeToggle<CR>
@@ -309,8 +342,8 @@ imap <F3> <Esc>:TagbarToggle<CR>
 nmap <F4> :GundoToggle<CR>
 imap <F4> <Esc>:GundoToggle<CR>
 nmap <F5> :ToggleGStatus<CR>
-nmap  <Space> <Plug>(easymotion-s)
-vmap  <Space> <Plug>(easymotion-s)
+nmap <Space> <Plug>(easymotion-s)
+vmap <Space> <Plug>(easymotion-s)
 nmap <tab> <C-W>w
 cmap w!! %!sudo tee > /dev/null %
 vnoremap < <gv
@@ -330,8 +363,11 @@ nmap <C-Down> ]e
 vmap <C-Up> [egv
 vmap <C-Down> ]egv
 
+map <leader>b :call AddDebug()<cr>
+
 command W w
 command Q q
 command Qal qal
 
 highlight Comment gui=italic
+
