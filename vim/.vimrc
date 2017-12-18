@@ -1,47 +1,31 @@
 " ln -sf ~/Dropbox/vim-settings/.vimrc ~/.vimrc
+set rtp+=/usr/local/opt/fzf
 
-" VUNDLE {{{
-set rtp+=~/.vim/bundle/Vundle.vim/
-call vundle#begin()
-" }}}
+" Install vim-plug for new VIM
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
-" BUNDLES LIST {{{
-Plugin 'gmarik/Vundle.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'bling/vim-airline'
-Plugin 'tpope/vim-commentary'
-Plugin 'lucapette/vim-ruby-doc'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-rails'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'gcmt/wildfire.vim'
-Plugin 'mileszs/ack.vim'
-Plugin 'tpope/vim-endwise'
-Plugin 'kien/ctrlp.vim'
-Plugin 'xolox/vim-easytags'
-Plugin 'xolox/vim-misc'
-Plugin 'easymotion/vim-easymotion'
-Plugin 'unblevable/quick-scope'
-Plugin 'mustache/vim-mustache-handlebars'
-Plugin 'Shougo/unite.vim'
-Plugin 'sirver/ultisnips'
-Plugin 'honza/vim-snippets'
-Plugin 'valloric/youcompleteme'
-Plugin 'ervandew/supertab'
-Plugin 'posva/vim-vue'
-Plugin 'slim-template/vim-slim.git'
-Plugin 'thoughtbot/vim-rspec'
-" Plugin 'w0rp/ale'
-
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+call plug#begin('~/.vim/plugged')
+Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-unimpaired'
+Plug 'vim-airline/vim-airline'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-endwise'
+Plug 'thoughtbot/vim-rspec'
+Plug 'junegunn/fzf.vim'
+Plug 'w0rp/ale'
+Plug 'gcmt/wildfire.vim'
+" Plug 'slim-template/vim-slim'
+call plug#end()
 
 if has('gui_running')
-    " colorscheme Tomorrow-Night
     colorscheme hybrid
-    " colorscheme railscasts2
+    highlight Comment gui=italic
     set background=dark
     set guifont=Monaco\ for\ Powerline:h16
     set guioptions-=m
@@ -60,49 +44,13 @@ if has('gui_running')
 else
     set background=dark
     colorscheme hybrid
-    " colorscheme Tomorrow-Night
 endif
 
-let g:ycm_use_ultisnips_completer = 1
+let g:rails_ctags_arguments = ['--languages=Ruby']
 
-let g:jsx_ext_required = 0
-
-" make YCM compatible with UltiSnips (using supertab)
-" let g:ycm_auto_trigger=1
-let g:ycm_min_num_of_chars_for_completion = 3
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:ycm_filetype_specific_completion_to_disable = { 'ruby': 1 }
-let g:SuperTabDefaultCompletionType = '<C-n>'
-
-" better key bindings for UltiSnipsExpandTrigger
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-
-" EASY TAGS OPTIONS {{{
-"
-" example:
-" :UpdateTags -R ~/Projects/music_at_menlo/
-set tags=./tags;
-let g:easytags_file = '~/.vim/tags'
-let g:easytags_async = 1
-" let g:easytags_events = ['BufUnload']
-let g:easytags_updatetime_min = 20000
-let g:easytags_auto_highlight = 0
-let g:easytags_dynamic_files = 1
-let g:easytags_on_cursorhold = 0
-let g:easytags_auto_update = 0
-" }}}
-
-let g:ruby_debugger_debug_mode = 1
-
-
-" UNITE {{{
-let g:unite_source_buffer_time_format = ""
-let g:unite_winheight = 15
-call unite#custom#profile('buffers', 'context', {'ignorecase': 1})
-call unite#filters#sorter_default#use(['sorter_word'])
+" ALE {{{
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_enter = 0
 " }}}
 
 " RSPEC {{{
@@ -113,22 +61,11 @@ map <Leader>l :call RunLastSpec()<CR>
 map <Leader>a :call RunAllSpecs()<CR>
 " }}}
 
-" SYNTASTIC {{{
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_check_on_open = 0
-" let g:syntastic_check_on_wq = 0
-" }}}
-
 " GENERAL OPTIONS {{{
 au BufWinLeave * silent! mkview
 au BufWinEnter * silent! loadview
 
 syntax enable
-set cursorline
 set splitbelow
 set splitright
 set undofile
@@ -137,8 +74,6 @@ set backup
 set backupdir=~/.vim/backups
 set directory=~/.vim/swaps
 set t_Co=256
-"set background=dark
-"colorscheme railscasts
 set scrolljump=5
 set scrolloff=3
 set bs=2
@@ -221,32 +156,17 @@ autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType c set omnifunc=ccomplete#Complete
 autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
-
 autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
 autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 autocmd FileType ruby,eruby let g:rubycomplete_load_gemfile = 1
 autocmd FileType ruby,eruby let g:rubycomplete_include_object = 1
 autocmd FileType ruby,eruby let g:rubycomplete_include_objectspace = 1
-
 set completeopt=longest,menuone
 " }}}
 
 " REMOVE TRAILING SPACES {{{
 autocmd BufWritePre * :%s/\s\+$//e
-" }}}
-"
-" 80 SYMBOLS LINE {{{
-if exists('+colorcolumn')
-  set colorcolumn=80
-else
-  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
-endif
-" }}}
-
-" RUBYDOC {{{
-"let g:ruby_doc_command='open'
-let g:qs_highlight_on_keys = ['f', 'F']
 " }}}
 
 " NERDTree SETTINGS {{{
@@ -261,49 +181,46 @@ let NERDTreeShowBookmarks=1
 let NERDTreeBookmarksFile=expand("$HOME/.vim/.NERDTreeBookmarks")
 let g:NERDTreeWinSize=40
 let NERDTreeChDirMode=2
+let NERDTreeHighlightCursorline = 0
 " }}}
 
-" AIRLINE SETTINGS {{{
-" let g:airline_theme = "tomorrow"
-let g:airline_powerline_fonts = 1
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
+" FZF {{{
+command! -bang -nargs=* Ag
+  \ call fzf#vim#ag(<q-args>,
+  \                 <bang>0 ? fzf#vim#with_preview('up:60%')
+  \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \                 <bang>0)
 
-let g:airline_left_sep = ''
-let g:airline_right_sep = ''
-let g:airline_symbols.linenr = '␊'
-let g:airline_symbols.linenr = '␤'
-let g:airline_symbols.linenr = '¶'
-let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.paste = 'ρ'
-let g:airline_symbols.paste = 'Þ'
-let g:airline_symbols.paste = '∥'
-let g:airline_symbols.whitespace = 'Ξ'
+" Go to tag under cursor
+nnoremap <leader>d :call fzf#vim#tags(expand('<cword>'), {'options': '--exact --select-1 --exit-0'})<CR>
+
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
 
 " }}}
 
-" CTRL-P SETTINGS {{{
-let g:ctrlp_buffer_func = { 'enter': 'CtrlPMappings' }
-let g:ctrlp_match_window = 'top,order:btt,min:1,max:15,results:15'
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn|tmp|forum|log|public|bundle)$',
-  \ 'file': '\v\.(exe|so|dll|log|jpeg|jpg|svg|png)$',
-  \ }
-" }}}
-
-" ACK SETTINGS {{{
-function! VAckSearch()
+" Ag SETTINGS {{{
+function! AgSearch()
     norm! gv"sy
-    return ':Ack "' . EscapeAllString(@s) . '"'
+    return ':Ag '. @s
 endfunction
-
-function! EscapeAllString(text)
-    return substitute(escape(a:text, '*^$.?/\|{[()]}'), '\n', '\\n', 'g')
-endfunction
-
-let g:ack_default_options = ' -s -H --nocolor --nogroup --column'
-let g:ackhighlight = 1
 " }}}
 
 " FUGITIVE {{{
@@ -317,38 +234,26 @@ endfunction
 command ToggleGStatus :call ToggleGStatus()
 " }}}
 
-" BINDING.PRY {{{
-function AddDebug()
-  execute "normal obinding.pry\<Esc>"
-endfunction
-" }}}
-
-
 " MAPPING {{{
 
 nnoremap ; :
 nmap <F1> <nop>
 nmap Q <Nop>
-" nmap <F1> :echo<CR>
-" imap <F1> <C-o>:echo<CR>
-nnoremap <silent> <F1> :Unite buffer:- -toggle<CR>
+nnoremap <silent> <F1> :Buffer<CR>
+
 nnoremap <C-c> <silent> <C-c>
 nmap <F2> :NERDTreeToggle<CR>
 imap <F2> <Esc>:NERDTreeToggle<CR>
 nmap <leader><F2> :NERDTreeFind<CR>
 imap <leader><F2> <Esc>:NERDTreeFind<CR>
-nmap <F3> :TagbarToggle<CR>
-imap <F3> <Esc>:TagbarToggle<CR>
-nmap <F4> :GundoToggle<CR>
-imap <F4> <Esc>:GundoToggle<CR>
 nmap <F5> :ToggleGStatus<CR>
-nmap <Space> <Plug>(easymotion-s)
-vmap <Space> <Plug>(easymotion-s)
+nmap <F6> :GFiles?<CR>
+nmap <C-p> :Files<CR>
 nmap <tab> <C-W>w
 cmap w!! %!sudo tee > /dev/null %
 vnoremap < <gv
 vnoremap > >gv
-vnoremap <C-]> :<C-u>exec VAckSearch()<CR>
+vnoremap <C-]> :<C-u>exec AgSearch()<CR>
 vmap s' "zdi'<C-R>z'<ESC>
 vmap s" "zdi"<C-R>z"<ESC>
 vmap s( "zdi(<C-R>z)<ESC>
@@ -363,11 +268,6 @@ nmap <C-Down> ]e
 vmap <C-Up> [egv
 vmap <C-Down> ]egv
 
-map <leader>b :call AddDebug()<cr>
-
 command W w
 command Q q
 command Qal qal
-
-highlight Comment gui=italic
-
