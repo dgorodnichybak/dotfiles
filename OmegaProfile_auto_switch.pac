@@ -1,5 +1,11 @@
 var FindProxyForURL = function(init, profiles) {
     return function(url, host) {
+	    if (shExpMatch(host, "*.slack-msgs.com")) {
+		    // Use SOCK proxy,
+		    // or fall back to a DIRECT traffic.
+		    // ssh -D 8000 [user]@[server]
+		    return "SOCKS 127.0.0.1:8000; DIRECT";
+	    }
         "use strict";
         var result = init, scheme = url.substr(0, url.indexOf(":"));
         do {
