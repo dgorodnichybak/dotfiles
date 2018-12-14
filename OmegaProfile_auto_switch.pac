@@ -19,6 +19,7 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)toggl\.com$/.test(host)) return "+proxy";
         if (/(?:^|\.)pivotaltracker\.com$/.test(host)) return "+proxy";
         if (/(?:^|\.)mailgun\.com$/.test(host)) return "+proxy";
+        if (/(?:^|\.)telegra\.ph$/.test(host)) return "+proxy";
         return "DIRECT";
     },
     "+proxy": function(url, host, scheme) {
