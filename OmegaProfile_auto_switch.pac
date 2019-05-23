@@ -20,6 +20,14 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)pivotaltracker\.com$/.test(host)) return "+proxy";
         if (/(?:^|\.)mailgun\.com$/.test(host)) return "+proxy";
         if (/(?:^|\.)telegra\.ph$/.test(host)) return "+proxy";
+        if (/(?:^|\.)slack\.com$/.test(host)) return "+proxy";
+        if (/(?:^|\.)slack-msgs\.com$/.test(host)) return "+proxy";
+        if (/(?:^|\.)slack-files\.com$/.test(host)) return "+proxy";
+        if (/(?:^|\.)slack-imgs\.com$/.test(host)) return "+proxy";
+        if (/(?:^|\.)slack-edge\.com$/.test(host)) return "+proxy";
+        if (/(?:^|\.)slack-core\.com$/.test(host)) return "+proxy";
+        if (/(?:^|\.)slack-redir\.net$/.test(host)) return "+proxy";
+        if (/(?:^|\.)slackb\.com$/.test(host)) return "+proxy";
         return "DIRECT";
     },
     "+proxy": function(url, host, scheme) {
