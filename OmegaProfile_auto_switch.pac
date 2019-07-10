@@ -28,6 +28,7 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)slack-core\.com$/.test(host)) return "+proxy";
         if (/(?:^|\.)slack-redir\.net$/.test(host)) return "+proxy";
         if (/(?:^|\.)slackb\.com$/.test(host)) return "+proxy";
+        if (/(?:^|\.)developer\.android\.com\.com$/.test(host)) return "+proxy";
         return "DIRECT";
     },
     "+proxy": function(url, host, scheme) {
