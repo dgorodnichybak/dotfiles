@@ -30,7 +30,8 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)slackb\.com$/.test(host)) return "+proxy";
         if (/(?:^|\.)developer\.android\.com$/.test(host)) return "+proxy";
         if (/(?:^|\.)trello\.com$/.test(host)) return "+proxy";
-     
+        if (/(?:^|\.)stripe\.com$/.test(host)) return "+proxy";
+        
         return "DIRECT";
     },
     "+proxy": function(url, host, scheme) {
