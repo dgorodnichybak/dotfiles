@@ -31,6 +31,8 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)developer\.android\.com$/.test(host)) return "+proxy";
         if (/(?:^|\.)trello\.com$/.test(host)) return "+proxy";
         if (/(?:^|\.)stripe\.com$/.test(host)) return "+proxy";
+        if (/(?:^|\.)devchat\.tv$/.test(host)) return "+proxy";
+        
         
         return "DIRECT";
     },
