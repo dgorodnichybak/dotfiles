@@ -33,8 +33,8 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)stripe\.com$/.test(host)) return "+proxy";
         if (/(?:^|\.)devchat\.tv$/.test(host)) return "+proxy";
         if (/(?:^|\.)myshopify\.com$/.test(host)) return "+proxy";
+        if (/(?:^|\.)shopify\.com$/.test(host)) return "+proxy";
         if (/(?:^|\.)t\.me$/.test(host)) return "+proxy";
- 
         
         return "DIRECT";
     },
