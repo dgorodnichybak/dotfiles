@@ -35,6 +35,7 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)myshopify\.com$/.test(host)) return "+proxy";
         if (/(?:^|\.)shopify\.com$/.test(host)) return "+proxy";
         if (/(?:^|\.)t\.me$/.test(host)) return "+proxy";
+        if (/(?:^|\.)fuchsia\.dev$/.test(host)) return "+proxy";
         
         return "DIRECT";
     },
